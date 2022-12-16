@@ -1,7 +1,7 @@
 # Inertial Sense ROS
 
 
-A ROS wrapper for the InertialSense uINS3 RTK-GPS-INS and Dual GPS (GPS Compassing) sensor.
+A ROS2 wrapper for the InertialSense uINS3 RTK-GPS-INS and Dual GPS (GPS Compassing) sensor. Adapted from the [original](https://github.com/inertialsense/inertial-sense-ros-old) ROS driver.
 
 ## NOTICE:
 
@@ -14,20 +14,19 @@ rosservice call /firmware_update ~/Download/IS_uINS-3_<...>.hex
 This ROS package, uses the inertial-sense-sdk as a submodule. Clone this package into the catkin workspace `src` folder, then pull the submodule.
 
 ``` bash
-mkdir -p catkin_ws/src
-cd catkin_ws/src
-catkin_init_workspace
-git clone https://github.com/inertialsense/inertial_sense_ros
+mkdir -p colcon_ws/src
+cd colcon_ws/src
+git clone git@gitlab.magiccvs.byu.edu:boatlanding/inertialsense_ros2.git
 cd inertial_sense_ros
 git submodule update --init --recursive
 cd ../..
-catkin_make
+colcon build --symlink-install
 ```
 
 ## Running the Node
 
 ```bash
-rosrun inertial_sense inertial_sense_node
+ros2 run inertial_sense inertial_sense_node
 ```
 
 The user must be a member of the `dailout` group, or the user won't have access to the serial port.
@@ -35,8 +34,8 @@ The user must be a member of the `dailout` group, or the user won't have access 
 For instructions on changing parameter values and topic remapping from the command line while using `rosrun` refer to the [Remapping Arguments](http://wiki.ros.org/Remapping%20Arguments) page. To set vector parameters, use the following syntax:
 
 ``` bash
-rosparam set /inertial_sense_node/GPS_ref_lla "[40.25, -111.67, 1556.59]"
-rosrun inertial_sense inertial_sense_node
+ros2 param set /inertial_sense_node/GPS_ref_lla "[40.25, -111.67, 1556.59]"
+ros2 run inertial_sense inertial_sense_node
 ```
 
 To set parameters and topic remappings from a launch file, refer to the [Roslaunch for Larger Projects](http://wiki.ros.org/roslaunch/Tutorials/Roslaunch%20tips%20for%20larger%20projects) page, or the sample `launch/test.launch` file in this repository.
