@@ -16,6 +16,8 @@ find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(rosgraph_msgs REQUIRED)
 find_package(diagnostic_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
 find_package(rosidl_typesupport_cpp REQUIRED)
 find_package(rosidl_typesupport_introspection_cpp REQUIRED)
 find_package(rosidl_typesupport_c REQUIRED)
@@ -63,11 +65,11 @@ add_library(inertial_sense_ros_lib
 )
 
 target_link_libraries(inertial_sense_ros_lib InertialSense pthread) # ${ament_LIBRARIES}
-ament_target_dependencies(inertial_sense_ros_lib rclcpp rosgraph_msgs std_msgs geometry_msgs sensor_msgs diagnostic_msgs)
+ament_target_dependencies(inertial_sense_ros_lib rclcpp rosgraph_msgs std_msgs geometry_msgs sensor_msgs diagnostic_msgs nav_msgs std_srvs)
 
 add_executable(inertial_sense_node src/inertial_sense_node.cpp)
 target_link_libraries(inertial_sense_node inertial_sense_ros_lib) # ${ament_LIBRARIES}
-ament_target_dependencies(inertial_sense_node rclcpp rosgraph_msgs std_msgs geometry_msgs sensor_msgs diagnostic_msgs)
+ament_target_dependencies(inertial_sense_node rclcpp rosgraph_msgs std_msgs geometry_msgs sensor_msgs diagnostic_msgs nav_msgs std_srvs)
 # add_dependencies(inertial_sense_node inertial_sense_ros_lib)
 # rosidl_target_interfaces(inertial_sense_ros_lib ${PROJECT_NAME} "rosidl_typesupport_cpp")
 #rosidl_generate_interfaces(${PROJECT_NAME} ${srv_files} DEPENDENCIES sensor_msgs ) ## added by H
@@ -80,6 +82,8 @@ ament_export_dependencies(
   geometry_msgs
   rosgraph_msgs
   diagnostic_msgs
+  nav_msgs
+  std_srvs
 )
 ament_export_include_directories(include)
 ament_export_libraries(inertial_sense_ros_lib)
